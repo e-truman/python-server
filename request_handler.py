@@ -63,7 +63,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any GET request.
-        def do_GET(self):
+    def do_GET(self):
         self._set_headers(200)
         response = {}  # Default response
 
