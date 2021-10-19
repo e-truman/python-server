@@ -125,7 +125,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif key == "location_id" and resource == "employees":
                 response = get_employees_by_location(value)
 
-            self.wfile.write(response.encode())
+        self.wfile.write(response.encode())
 
 
 
