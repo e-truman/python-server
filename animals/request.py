@@ -1,34 +1,7 @@
 import sqlite3
 import json
-from models import Animal
-from models import Location
+from models import Animal, Location, Customer
 
-ANIMALS = [
-    {
-        "id": 1,
-        "name": "Snickers",
-        "species": "Dog",
-        "locationId": 1,
-        "customerId": 4,
-        "status": "Admitted"
-    },
-    {
-        "id": 2,
-        "name": "Gypsy",
-        "species": "Dog",
-        "locationId": 1,
-        "customerId": 2,
-        "status": "Admitted"
-    },
-    {
-        "id": 3,
-        "name": "Blue",
-        "species": "Cat",
-        "locationId": 2,
-        "customerId": 1,
-        "status": "Admitted"
-    }
-]
 
 
 def get_all_animals():
@@ -49,11 +22,16 @@ def get_all_animals():
             a.location_id,
             a.customer_id,
             l.name location_name,
-            l.address location_address
+            l.address location_address,
+            c.name customer_name,
+            c.address customer_address,
+            c.email customer_email,
+            c.password customer_password
         FROM Animal a
         JOIN Location l
             ON l.id = a.location_id
-
+        JOIN Customer c
+            ON c.id = a.customer_id
         """)
 
         # Initialize an empty list to hold all animal representations
@@ -70,10 +48,13 @@ def get_all_animals():
                             row['location_id'], row['customer_id'])
 
             # Create a Location instance from the current row
-            location = Location(row['id'], row['location_name'], row['location_address'])
+            location = Location(row['location_id'], row['location_name'], row['location_address'])
+
+            customer = Customer(row['customer_id'], row['customer_name'], row['customer_address'], row['customer_email'], row['customer_password'])
 
             # Add the dictionary representation of the location to the animal
             animal.location = location.__dict__
+            animal.customer = customer.__dict__
 
             # Add the dictionary representation of the animal to the list
             animals.append(animal.__dict__)
