@@ -173,7 +173,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         (resource, id) = self.parse_url(self.path)
 
         success = False
-
+        # below changes success to true if the update worked
         if resource == "animals":
             success = update_animal(id, post_body)
         elif resource == "customers":
